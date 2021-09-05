@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, Button, Text } from 'react-native';
+import { View, Button, Text, TouchableOpacity } from 'react-native';
 import { SafeAreaView } from "react-native-safe-area-context";
 import { connect } from 'react-redux';
 
@@ -53,9 +53,8 @@ class GameScreen extends React.Component {
                         marginRight: CONSTANTS.GAP_BETWEEN_CARDS,
                         height: 40
                     }}>
-                    <Button
-                        title={uppercaseString(CONSTANTS.RESTART)}
-                        style={{ color: '#007AFF' }}
+                    <TouchableOpacity
+
                         onPress={() => {
                             store.dispatch(resetStepsTaken());
                             store.dispatch(resetCardPairValues());
@@ -67,7 +66,11 @@ class GameScreen extends React.Component {
                                 verifyingUserSelection: false
                             })
                         }}
-                    />
+                    >
+                        <Text style={{ color: '#007AFF' }}>
+                            {uppercaseString(CONSTANTS.RESTART)}
+                        </Text>
+                    </TouchableOpacity>
                     <View style={{
                         flexDirection: "row"
                     }}>
