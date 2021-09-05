@@ -27,52 +27,8 @@ class Card extends React.Component {
 
     render() {
         return (
-            // <View
-            //     key={this.props.cardIndex}
-            //     style={{
-            // marginTop: CONSTANTS.GAP_BETWEEN_CARDS,
-            // marginLeft: CONSTANTS.GAP_BETWEEN_CARDS,
-            // width: generateCardWidth(),
-            // height: this.props.cardHeight,
-            // backgroundColor: 'white',
-            // borderRadius: 16
-            //     }}
-            // >
-            //     <TouchableOpacity
-            //         style={{
-            //             width: "100%",
-            //             height: "100%",
-            //             justifyContent: 'center',
-            //             alignItems: 'center'
-            //         }}
-            //         onPress={this.onPressCard}>
-            //         {
-            //             this.props.cardInformation.matched || this.props.cardInformation.numberShownToUser ?
-            //                 <View
-            //                     style={[]}
-            //                 >
-            //                     <Text>
-            //                         {this.props.cardInformation.number}
-            //                     </Text>
-            //                 </View> :
-            //                 <View style={[{
-            //                     width: '94%',
-            //                     height: '97%',
-            //                     backgroundColor: themes.lightBlue,
-            //                     borderRadius: 16,
-            //                     justifyContent: 'center',
-            //                     alignItems: 'center'
-            //                 }]}
-            //                 >
-            //                     <Text style={{ fontSize: 30, fontWeight: 'bold', color: "white" }}>
-            //                         ?
-            //                     </Text>
-            //                 </View>
-            //         }
-            //     </TouchableOpacity>
-            // </View>
-
             <View
+                key={this.props.cardIndex}
                 style={{
                     marginTop: CONSTANTS.GAP_BETWEEN_CARDS,
                     marginLeft: CONSTANTS.GAP_BETWEEN_CARDS,
