@@ -2,9 +2,11 @@ import { applyMiddleware, createStore, combineReducers } from "redux";
 import thunk from "redux-thunk";
 
 import cardReducer from './card/cardReducer';
+import stepReducer from './step/stepReducer';
 
 const reducers = {
-    cardReducer
+    cardReducer,
+    stepReducer
 };
 
 const createStoreWithMiddleware = applyMiddleware(thunk)(createStore);

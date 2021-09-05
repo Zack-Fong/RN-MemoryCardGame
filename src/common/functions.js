@@ -1,3 +1,9 @@
+import { CONSTANTS } from "./constants";
+import { themes } from "./themes";
+
+import { getBottomSpace } from 'react-native-iphone-x-helper';
+import { Platform } from "react-native";
+
 export function shuffleArray(array) {
     // Durstenfeld shuffle algorithm
     for (let i = array.length - 1; i > 0; i--) {
@@ -8,50 +14,29 @@ export function shuffleArray(array) {
     return array;
 }
 
-export function generatePairsOfUniqueNumbers(numberOfPlayingCards) {
+export function generatePairsOfUniqueNumbers(numberOfPlayingCards, shuffle) {
     let pairsOfUniqueNumbers = [];
-    for (let i = 0; i < numberOfPlayingCards; i++) {
+    for (let i = 0; i < numberOfPlayingCards / 2; i++) {
         let randomNumber = Math.floor(Math.random() * 100) + 1;
         if (pairsOfUniqueNumbers.indexOf(randomNumber) === -1) {
-            pairsOfUniqueNumbers.push({ number: randomNumber, numberShownToUser: false });
-            pairsOfUniqueNumbers.push({ number: randomNumber, numberShownToUser: false });
+            pairsOfUniqueNumbers.push({ number: randomNumber, numberShownToUser: false, matched: false });
+            pairsOfUniqueNumbers.push({ number: randomNumber, numberShownToUser: false, matched: false });
         }
     }
 
-    return pairsOfUniqueNumbers;
+    return (shuffle ? shuffleArray(pairsOfUniqueNumbers) : pairsOfUniqueNumbers);
 }
 
-export function generateAndShufflePairsOfUniqueNumbers(numberOfPlayingCards) {
-    let pairsOfUniqueNumbers = generatePairsOfUniqueNumbers(numberOfPlayingCards);
-    return shuffleArray(pairsOfUniqueNumbers);
+export function getNumberOfPlayCards() {
+    return CONSTANTS.NUMBER_OF_ROWS * CONSTANTS.NUMBER_OF_CARDS_PER_ROW;
 }
 
-export function isNumber(number) {
-    return (Number.isFinite(number));
+export function generateCardWidth() {
+    return ((themes.screenWidth - (CONSTANTS.GAP_BETWEEN_CARDS * (CONSTANTS.NUMBER_OF_CARDS_PER_ROW + 1))) / CONSTANTS.NUMBER_OF_CARDS_PER_ROW);
 }
 
-export function isString(string) {
-    return (typeof string === 'string');
-}
-
-export function isArray(array) {
-    return Array.isArray(array);
-}
-
-export function isObject(object) {
-    return (typeof object === 'object');
-}
-
-export function isVariableDefined(variable) {
-    return typeof variable !== 'undefined' && variable !== null;
-}
-
-export function isNumberEmpty(number) {
-    return (typeof number === "undefined" || number === null || number === '' || isNaN(Number(number)));
-}
-
-export function isStringEmpty(string) {
-    return (typeof string === 'undefined' || string === null || string.length === 0);
+export function generateCardHeight(viewHeight) {
+    return ((viewHeight - getBottomSpace() - (CONSTANTS.GAP_BETWEEN_CARDS * (CONSTANTS.NUMBER_OF_ROWS + (Platform.OS === "ios" ? 3 : 1)))) / CONSTANTS.NUMBER_OF_ROWS);
 }
 
 export function isArrayEmpty(array) {
@@ -64,14 +49,6 @@ export function isObjectEmpty(object) {
 
 export function isEqual(element1, element2) {
     return (element1 === element2);
-}
-
-export function shadowCopyObject(obj) {
-    return Object.assign({}, obj);
-}
-
-export function deepCopyObject(obj) {
-    return JSON.parse(JSON.stringify(obj));
 }
 
 export function capitalizeString(string) {
@@ -87,8 +64,4 @@ export function capitalizeString(string) {
 
 export function uppercaseString(string) {
     return string.toUpperCase();
-}
-
-export function lowercaseString(string) {
-    return string.toLowerCase();
 }
