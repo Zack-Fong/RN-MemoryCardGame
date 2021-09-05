@@ -40,11 +40,11 @@ export function generateCardHeight(viewHeight) {
 }
 
 export function isArrayEmpty(array) {
-    return (typeof array === 'undefined' || array === null || array.length === 0);
+    return (typeof array === 'undefined' || array === null || array.length === 0 || !Array.isArray(array));
 }
 
 export function isObjectEmpty(object) {
-    return (typeof object === 'undefined' || object === null || (Object.entries(object).length === 0 && object.constructor === Object));
+    return (typeof object === 'undefined' || object === null || (Object.entries(object).length === 0 && object.constructor === Object) || Array.isArray(object));
 }
 
 export function isEqual(element1, element2) {
