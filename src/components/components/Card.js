@@ -1,5 +1,7 @@
 import React from 'react';
 import { View, TouchableOpacity, Text } from 'react-native';
+import FlipCard from "react-native-flip-card-plus";
+
 import store from '../redux/store';
 import { updateStepsTaken } from '../redux/step/stepAction';
 
@@ -10,6 +12,10 @@ import { themes } from '../../common/themes';
 class Card extends React.Component {
     constructor(props) {
         super(props);
+
+        this.state = {
+            flip: false
+        }
     }
 
     onPressCard = () => {
@@ -21,50 +27,104 @@ class Card extends React.Component {
 
     render() {
         return (
+            // <View
+            //     key={this.props.cardIndex}
+            //     style={{
+            // marginTop: CONSTANTS.GAP_BETWEEN_CARDS,
+            // marginLeft: CONSTANTS.GAP_BETWEEN_CARDS,
+            // width: generateCardWidth(),
+            // height: this.props.cardHeight,
+            // backgroundColor: 'white',
+            // borderRadius: 16
+            //     }}
+            // >
+            //     <TouchableOpacity
+            //         style={{
+            //             width: "100%",
+            //             height: "100%",
+            //             justifyContent: 'center',
+            //             alignItems: 'center'
+            //         }}
+            //         onPress={this.onPressCard}>
+            //         {
+            //             this.props.cardInformation.matched || this.props.cardInformation.numberShownToUser ?
+            //                 <View
+            //                     style={[]}
+            //                 >
+            //                     <Text>
+            //                         {this.props.cardInformation.number}
+            //                     </Text>
+            //                 </View> :
+            //                 <View style={[{
+            //                     width: '94%',
+            //                     height: '97%',
+            //                     backgroundColor: themes.lightBlue,
+            //                     borderRadius: 16,
+            //                     justifyContent: 'center',
+            //                     alignItems: 'center'
+            //                 }]}
+            //                 >
+            //                     <Text style={{ fontSize: 30, fontWeight: 'bold', color: "white" }}>
+            //                         ?
+            //                     </Text>
+            //                 </View>
+            //         }
+            //     </TouchableOpacity>
+            // </View>
+
             <View
-                key={this.props.cardIndex}
                 style={{
                     marginTop: CONSTANTS.GAP_BETWEEN_CARDS,
                     marginLeft: CONSTANTS.GAP_BETWEEN_CARDS,
                     width: generateCardWidth(),
-                    height: this.props.cardHeight,
-                    backgroundColor: 'white',
-                    borderRadius: 16
+                    height: this.props.cardHeight
                 }}
             >
-                <TouchableOpacity
+                <FlipCard
                     style={{
-                        width: "100%",
-                        height: "100%",
+                        backgroundColor: this.props.cardInformation.matched || this.props.cardInformation.numberShownToUser ? "white" : themes.lightBlue,
+                        borderRadius: 16,
+
+                        justifyContent: 'center',
+                        alignItems: 'center',
+                        width: '100%',
+                        height: '100%'
+                    }}
+                    flipHorizontal
+                    pressable={true}
+                    onPressed={() => {
+                        if (!this.props.cardInformation.matched && !this.props.isVerifying && !this.props.cardInformation.numberShownToUser) {
+                            store.dispatch(updateStepsTaken());
+                            this.props.onPressCard && this.props.onPressCard(this.props.cardIndex);
+                        }
+                    }}
+                    flip={this.props.cardInformation.matched || this.props.cardInformation.numberShownToUser}
+                >
+                    {/* Face Side */}
+                    <View style={{
+                        backgroundColor: themes.lightBlue,
                         justifyContent: 'center',
                         alignItems: 'center'
                     }}
-                    onPress={this.onPressCard}>
-                    {
-                        this.props.cardInformation.matched || this.props.cardInformation.numberShownToUser ?
-                            <View
-                                style={[]}
-                            >
-                                <Text>
-                                    {this.props.cardInformation.number}
-                                </Text>
-                            </View> :
-                            <View style={[{
-                                width: '94%',
-                                height: '97%',
-                                backgroundColor: themes.lightBlue,
-                                borderRadius: 16,
-                                justifyContent: 'center',
-                                alignItems: 'center'
-                            }]}
-                            >
-                                <Text style={{ fontSize: 30, fontWeight: 'bold', color: "white" }}>
-                                    ?
-                                </Text>
-                            </View>
-                    }
-                </TouchableOpacity>
-            </View>
+                    >
+                        <Text style={{ fontSize: 30, fontWeight: 'bold', color: "white" }}>
+                            ?
+                        </Text>
+                    </View>
+                    {/* Back Side */}
+                    <View
+                        style={{
+                            justifyContent: 'center',
+                            alignItems: 'center'
+                        }}
+                    >
+                        <Text>
+                            {this.props.cardInformation.number}
+                        </Text>
+                    </View>
+                </FlipCard>
+            </View >
+
         )
     }
 }
