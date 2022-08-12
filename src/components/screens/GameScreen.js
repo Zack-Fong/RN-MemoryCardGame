@@ -54,7 +54,6 @@ class GameScreen extends React.Component {
                         height: 40
                     }}>
                     <TouchableOpacity
-
                         onPress={() => {
                             store.dispatch(resetStepsTaken());
                             store.dispatch(resetCardPairValues());
